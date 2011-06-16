@@ -27,7 +27,7 @@ class cpWidgetFormSchemaFormatter extends sfWidgetFormSchemaFormatter {
       }
       else if ($widget instanceof sfWidgetFormSchema) {
         if ($fieldset) { 
-          $token = '</fieldset>';
+          $token = $this->getFieldsetClosingToken($form, $form_name);
           $fieldset = false;
         }
         else { $token = ''; }
@@ -43,7 +43,7 @@ class cpWidgetFormSchemaFormatter extends sfWidgetFormSchemaFormatter {
       }
     }
 
-    if ($fieldset) { $tokens[] = '</fieldset>'; }
+    if ($fieldset) { $tokens[] = $this->getFieldsetClosingToken($form, $form_name); }
     
     $tokens[] = implode("\n", $hiddenRows); 
     $form_format = $is_subform ?
@@ -101,4 +101,12 @@ class cpWidgetFormSchemaFormatter extends sfWidgetFormSchemaFormatter {
   
   public function setFieldsFormat($format) { $this->format_fields = $format; }
   
+  protected function getFieldsetToken(sfForm $form, $name = null) {
+    return '<fieldset' . ($name ? ' id="__' . $name . '"' : '') . 
+                         ($form->getOption('fieldset_class') ? ' class="' . $form->getOption('fieldset_class') . '">' : '>');  
+  }
+  
+  protected function getFieldsetClosingToken(sfForm $form, $name = null) {
+    return '</fieldset>';
+  }
 }
