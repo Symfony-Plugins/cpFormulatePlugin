@@ -109,7 +109,7 @@ class cpForm extends sfFormSymfony {
     $this->getWidgetSchema()->getFormFormatter()->setTranslationCatalogue($catalogue);
   }
 
-  protected function translate($subject, $parameters = array()) {
+  public function translate($subject, $parameters = array()) {
     return $this->widgetSchema->getFormFormatter()->translate($subject, $parameters);
   }
 
