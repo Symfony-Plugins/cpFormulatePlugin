@@ -76,7 +76,7 @@ class cpForm extends sfFormSymfony {
       }
     }
     else {
-      $tmp = $this->object->getTable()->getFieldNames();
+      $tmp = $this->getObject()->getTable()->getFieldNames();
     }
 
     $tmp = array_diff($tmp, $fields);
