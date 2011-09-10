@@ -14,7 +14,9 @@ class cpForm extends sfFormSymfony {
     $this->localCSRFSecret = $CSRFSecret;
 
     $this->validatorSchema = new sfValidatorSchema();
-    $this->setWidgetSchema(new cpWidgetFormSchema());
+    
+    $widgetFormSchemaClass = $this->getWidgetFormSchemaClass();
+    $this->setWidgetSchema(new $widgetFormSchemaClass());
     $this->errorSchema     = new sfValidatorErrorSchema($this->validatorSchema);
 
     $this->setup();
@@ -27,6 +29,10 @@ class cpForm extends sfFormSymfony {
 
   protected function postSetup() {}
 
+  public function getWidgetFormSchemaClass() {
+    return 'cpWidgetFormSchema';
+  } 
+  
   /**
    * Sets the widgets associated with this form.
    *
@@ -35,7 +41,8 @@ class cpForm extends sfFormSymfony {
    * @return sfForm The current form instance
    */
   public function setWidgets(array $widgets) {
-    $this->setWidgetSchema(new cpWidgetFormSchema($widgets));
+    $widgetFormSchemaClass = $this->getWidgetFormSchemaClass();
+    $this->setWidgetSchema(new $widgetFormSchemaClass($widgets));
     return $this;
   }
 

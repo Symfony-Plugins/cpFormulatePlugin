@@ -62,6 +62,11 @@ class cpWidgetFormSchemaFormatter extends sfWidgetFormSchemaFormatter {
     $schema = $this->getWidgetSchema();
     $widget = $schema[$name];
         
+    $widgetAttributes = $this->generateAttributes($widget, $name);
+    if ($widget->getAttribute('holder_class')) {
+      $widget->setAttribute('holder_class', null);
+    }
+    
     // don't add a label tag if we embed a form schema
     $label = $widget instanceof sfWidgetFormSchema ? 
                $this->generateLabelName($name) : 
@@ -76,7 +81,7 @@ class cpWidgetFormSchemaFormatter extends sfWidgetFormSchemaFormatter {
       $error = $widget instanceof sfWidgetFormSchema ? array() : $error;
       $field = $schema->renderField($name, $value, $attributes, $error);
      
-      return $this->renderRow($label, $field, $error, $schema->getHelp($name), null, $this->generateAttributes($widget, $name));
+      return $this->renderRow($label, $field, $error, $schema->getHelp($name), null, $widgetAttributes);
     }
   }
   
