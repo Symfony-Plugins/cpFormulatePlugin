@@ -104,7 +104,7 @@ class cpForm extends sfFormSymfony {
     $this->values[$field] = $value;
   }
 
-  protected function getCulture() {
+  public function getCulture() {
     return $this->getOption('culture');
   }
 
