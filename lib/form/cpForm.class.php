@@ -150,4 +150,20 @@ class cpForm extends sfFormSymfony {
 
     return $this->formFields[$name];
   }
+  
+  /**
+   * Allows 'CSRF attacke' error message to be customized. 
+   * See http://discover-symfony.blogspot.com/2011/03/how-to-change-csrf-attack-detected-in.html
+   * See also http://stackoverflow.com/questions/2578397/symfony-1-4-custom-error-message-for-csrf-in-forms
+   * 
+   * @see sfForm::addCSRFProtection()
+   */
+  public function addCSRFProtection($secret = null) {
+    parent::addCSRFProtection($secret);
+    $validatorSchema=$this->getValidatorSchema();
+    if (isset($validatorSchema[self::$CSRFFieldName])) {
+      $validatorSchema[self::$CSRFFieldName] = 
+        new cpValidatorCSRFToken($validatorSchema[self::$CSRFFieldName]->getOptions());
+    }
+  }  
 }
